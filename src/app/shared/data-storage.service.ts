@@ -29,11 +29,14 @@ export class DataStorageService {
 	getRecipes() {
 		const token = this.authService.getToken();
 
+		// this.httpClient
+		// 	.get<Recipe[]>("https://my-ng-recipe-book-b0167.firebaseio.com/recipes.json?auth=" + token)
+
 		this.httpClient
-			.get<Recipe[]>(
-				"https://my-ng-recipe-book-b0167.firebaseio.com/recipes.json?auth=" +
-				token
-			)
+			.get<Recipe[]>("https://my-ng-recipe-book-b0167.firebaseio.com/recipes.json?auth=" + token, {
+				observe: 'body',
+				responseType: 'json'
+			})
 			.pipe(
 				map(recipes => {
 					for (let recipe of recipes) {
