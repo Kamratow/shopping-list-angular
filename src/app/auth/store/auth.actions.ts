@@ -9,7 +9,7 @@ export class Signup implements Action {
     readonly type = SIGNUP;
 }
 
-export class Sigin implements Action {
+export class Signin implements Action {
     readonly type = SIGNIN;
 }
 
@@ -23,4 +23,4 @@ export class SetToken implements Action {
     constructor(public payload: string) { }
 }
 
-export type AuthActions = Signup | Sigin | Logout | SetToken;
+export type AuthActions = Signup | Signin | Logout | SetToken;
