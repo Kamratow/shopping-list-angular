@@ -48,6 +48,6 @@ export class RecipeEffects {
         )
 
     constructor(private actions$: Actions,
-                private httpClient: HttpClient
+                private httpClient: HttpClient,
                 private store: Store<fromRecipe.FeatureState>) {}
 }
