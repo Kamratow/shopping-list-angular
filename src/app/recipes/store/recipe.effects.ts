@@ -1,3 +1,4 @@
+import {Injectable} from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { switchMap, map, withLatestFrom } from 'rxjs/operators';
 import { HttpClient, HttpRequest } from '@angular/common/http';
@@ -7,6 +8,7 @@ import * as RecipeActions from '../store/recipe.actions';
 import { Recipe } from '../recipe.model';
 import * as fromRecipe from './recipe.reducers';
 
+@Injectable()
 export class RecipeEffects {
     @Effect()
     recipeFetch = this.actions$
