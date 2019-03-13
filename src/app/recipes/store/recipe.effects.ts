@@ -1,9 +1,11 @@
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { switchMap, map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { switchMap, map, withLatestFrom } from 'rxjs/operators';
+import { HttpClient, HttpRequest } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 import * as RecipeActions from '../store/recipe.actions';
 import { Recipe } from '../recipe.model';
+import * as fromRecipe from './recipe.reducers';
 
 export class RecipeEffects {
     @Effect()
@@ -31,6 +33,21 @@ export class RecipeEffects {
         })
     );
 
+    @Effect({dispatch: false})
+    recipeStore = this.actions$
+        .pipe(
+            ofType(RecipeActions.STORE_RECIPES),
+            withLatestFrom(this.store.select('recipes')),
+            switchMap(([action, state]) => {
+                const req = new HttpRequest('PUT', 'https://my-ng-recipe-book-b0167.firebaseio.com/recipes.json',
+                state.recipes, {
+                    reportProgress: true
+                });
+		        return this.httpClient.request(req);
+            })
+        )
+
     constructor(private actions$: Actions,
-                private httpClient: HttpClient) {}
+                private httpClient: HttpClient
+                private store: Store<fromRecipe.FeatureState>) {}
 }
